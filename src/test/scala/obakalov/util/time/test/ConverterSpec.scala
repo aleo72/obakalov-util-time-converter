@@ -3,6 +3,8 @@ package obakalov.util.time.test
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
+  * Test of [[obakalov.util.time.Converter]]
+  *
   * Created by abakalov on 10.05.16.
   *
   * @author abakalov
