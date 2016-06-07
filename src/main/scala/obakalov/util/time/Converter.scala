@@ -1,7 +1,5 @@
 package obakalov.util.time
 
-import java.time.ZoneId
-
 import scala.language.implicitConversions
 
 /**
@@ -18,7 +16,7 @@ class Converter {
     * @return object of [[java.time.LocalDateTime]]
     */
   def jodaLocalDateTimeToJavaLocalDateTime(jodaDateTime: org.joda.time.LocalDateTime): java.time.LocalDateTime = {
-    java.time.LocalDateTime.ofInstant(jodaDateTime.toDate.toInstant, ZoneId.systemDefault())
+    java.time.LocalDateTime.ofInstant(jodaDateTime.toDate.toInstant, java.time.ZoneId.systemDefault())
   }
 
   /**
@@ -42,7 +40,7 @@ class Converter {
     * @return object of [[org.joda.time.DateTime]]
     */
   def javaOffsetDateTimeToJodaDateTime(offsetDateTime: java.time.OffsetDateTime): org.joda.time.DateTime = {
-    new org.joda.time.DateTime(offsetDateTime.toInstant.toEpochMilli)
+    new org.joda.time.DateTime(offsetDateTime.toInstant.toEpochMilli, org.joda.time.DateTimeZone.forID(offsetDateTime.getOffset.getId))
   }
 
   /**
@@ -52,7 +50,7 @@ class Converter {
     * @return object of [[java.time.OffsetDateTime]]
     */
   def jodaDateTimeToJavaOffsetDateTime(dateTime: org.joda.time.DateTime) = java.time.OffsetDateTime
-    .ofInstant(dateTime.toDate.toInstant, ZoneId.of(dateTime.getZone.getID))
+    .ofInstant(dateTime.toDate.toInstant, java.time.ZoneId.of(dateTime.getZone.getID))
 
   /**
     * Converting [[java.time.LocalDate]] to [[org.joda.time.LocalDate]]

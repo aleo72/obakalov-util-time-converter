@@ -17,8 +17,7 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 libraryDependencies += "joda-time" % "joda-time" % "2.9.3"
 
 
-// sbt clean coverage test
-// sbt coverageReport
+// sbt clean coverage test coverageReport
 parallelExecution in Test := false
 
 coverageEnabled := true

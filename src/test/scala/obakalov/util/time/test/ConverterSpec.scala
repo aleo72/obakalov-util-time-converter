@@ -15,11 +15,11 @@ class ConverterSpec extends FlatSpec with Matchers {
   import Data._
 
   "Class Converter" should "JavaLocalDateTime to JodaLocalDateTime" in {
-    javaLocalDateTime shouldEqual converter.jodaLocalDateTimeToJavaLocalDateTime(jodaDateTime)
+    javaLocalDateTime shouldEqual converter.jodaLocalDateTimeToJavaLocalDateTime(jodaLocalDateTime)
   }
 
   it should "JodaLocalDateTime to JavaLocalDateTime" in {
-    jodaDateTime shouldEqual converter.javaLocalDateTimeToJodaLocalDateTime(javaLocalDateTime)
+    jodaLocalDateTime shouldEqual converter.javaLocalDateTimeToJodaLocalDateTime(javaLocalDateTime)
   }
 
   it should "JavaLocalDate to JodaLocalDate" in {
@@ -29,18 +29,25 @@ class ConverterSpec extends FlatSpec with Matchers {
   it should "JodaLocalDate to JavaLocalDate" in {
     jodaLocalDate shouldEqual converter.javaLocalDateToJodaLocalDate(javaLocalDate)
   }
-  
+
+  it should "JodaDateTime to JavaOffsetDateTime" in {
+    javaOffsetDateTime shouldEqual converter.jodaDateTimeToJavaOffsetDateTime(jodaDateTime)
+  }
+
+  it should "JavaOffsetDateTime to JodaDateTime" in {
+    jodaDateTime shouldEqual converter.javaOffsetDateTimeToJodaDateTime(javaOffsetDateTime)
+  }
+
   "Implicits Converter" should "JavaLocalDateTime to JodaLocalDateTime" in {
     import obakalov.util.time.Converter.Implicits.jodaLocalDateTimeToJavaLocalDateTimeImplicits
-    val _jodaDateTime: java.time.LocalDateTime = jodaDateTime
+    val _jodaDateTime: java.time.LocalDateTime = jodaLocalDateTime
     javaLocalDateTime shouldEqual _jodaDateTime
   }
 
   it should "JodaLocalDateTime to JavaLocalDateTime" in {
     import obakalov.util.time.Converter.Implicits.javaLocalDateTimeToJodaDateTimeImplicits
     val _javaDateTime: org.joda.time.LocalDateTime = javaLocalDateTime
-    jodaDateTime shouldEqual _javaDateTime
-
+    jodaLocalDateTime shouldEqual _javaDateTime
   }
 
   it should "JavaLocalDate to JodaLocalDate" in {
@@ -49,12 +56,25 @@ class ConverterSpec extends FlatSpec with Matchers {
     jodaLocalDate shouldEqual _javaLocalDate
   }
 
-
   it should "JodaLocalDate to JavaLocalDate" in {
     import obakalov.util.time.Converter.Implicits.jodaLocalDateToJavaLocalDateImplicits
     val _jodaLocalDate: java.time.LocalDate = jodaLocalDate
     javaLocalDate shouldEqual _jodaLocalDate
   }
+
+  it should "JodaDateTime to JavaOffsetDateTime" in {
+    import obakalov.util.time.Converter.Implicits.jodaDateTimeToJavaOffsetDateTimeImplicits
+    val joda: java.time.OffsetDateTime = jodaDateTime
+    javaOffsetDateTime shouldEqual joda
+  }
+
+  it should "JavaOffsetDateTime to JodaDateTime" in {
+    import obakalov.util.time.Converter.Implicits.javaOffsetDateTimeToJodaDateTimeImplicits
+    val java: org.joda.time.DateTime = javaOffsetDateTime
+    jodaDateTime shouldEqual java
+  }
+
+
 
   object Data {
     val year = 2000
@@ -66,10 +86,13 @@ class ConverterSpec extends FlatSpec with Matchers {
     val nanoOfSecond = 0
 
     val javaLocalDateTime = java.time.LocalDateTime.of(year, month, dayOfMonth, hour, minute, seconds, nanoOfSecond)
-    val jodaDateTime = new org.joda.time.LocalDateTime(year, month, dayOfMonth, hour, minute, seconds, 0)
+    val jodaLocalDateTime = new org.joda.time.LocalDateTime(year, month, dayOfMonth, hour, minute, seconds, 0)
 
     val javaLocalDate = java.time.LocalDate.of(year, month, dayOfMonth)
     val jodaLocalDate = new org.joda.time.LocalDate(year, month, dayOfMonth)
+
+    val javaOffsetDateTime = java.time.OffsetDateTime.of(javaLocalDateTime, java.time.ZoneOffset.ofHours(-2))
+    val jodaDateTime = new org.joda.time.DateTime(year, month, dayOfMonth, hour, minute, seconds, 0, org.joda.time.DateTimeZone.forOffsetHours(-2))
 
   }
 
