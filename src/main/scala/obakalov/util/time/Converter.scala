@@ -22,18 +22,37 @@ class Converter {
   }
 
   /**
-    * Converting [[java.time.LocalDateTime]] to [[org.joda.time.DateTime]]
+    * Converting [[java.time.LocalDateTime]] to [[org.joda.time.LocalDateTime]]
     *
     * @param localDateTime instance of [[java.time.LocalDateTime]]
-    * @return object of [[org.joda.time.DateTime]]
+    * @return object of [[org.joda.time.LocalDateTime]]
     */
-  def javaLocalDateTimeToJodaDateTime(localDateTime: java.time.LocalDateTime): org.joda.time.LocalDateTime = {
+  def javaLocalDateTimeToJodaLocalDateTime(localDateTime: java.time.LocalDateTime): org.joda.time.LocalDateTime = {
     new org.joda.time.LocalDateTime(
       localDateTime.atZone(
         java.time.ZoneId.systemDefault()
       ).toInstant.toEpochMilli
     )
   }
+
+  /**
+    * Converting [[java.time.OffsetDateTime]] to [[org.joda.time.DateTime]]
+    *
+    * @param offsetDateTime instance of [[java.time.OffsetDateTime]]
+    * @return object of [[org.joda.time.DateTime]]
+    */
+  def javaOffsetDateTimeToJodaDateTime(offsetDateTime: java.time.OffsetDateTime): org.joda.time.DateTime = {
+    new org.joda.time.DateTime(offsetDateTime.toInstant.toEpochMilli)
+  }
+
+  /**
+    * Converting [[org.joda.time.DateTime]] to [[java.time.OffsetDateTime]]
+    *
+    * @param dateTime instance of [[org.joda.time.DateTime]]
+    * @return object of [[java.time.OffsetDateTime]]
+    */
+  def jodaDateTimeToJavaOffsetDateTime(dateTime: org.joda.time.DateTime) = java.time.OffsetDateTime
+    .ofInstant(dateTime.toDate.toInstant, ZoneId.of(dateTime.getZone.getID))
 
   /**
     * Converting [[java.time.LocalDate]] to [[org.joda.time.LocalDate]]
@@ -62,11 +81,15 @@ object Converter extends Converter {
 
     implicit def jodaLocalDateTimeToJavaLocalDateTimeImplicits(d: org.joda.time.LocalDateTime): java.time.LocalDateTime = Converter.jodaLocalDateTimeToJavaLocalDateTime(d)
 
-    implicit def javaLocalDateTimeToJodaDateTimeImplicits(d: java.time.LocalDateTime): org.joda.time.LocalDateTime = Converter.javaLocalDateTimeToJodaDateTime(d)
+    implicit def javaLocalDateTimeToJodaDateTimeImplicits(d: java.time.LocalDateTime): org.joda.time.LocalDateTime = Converter.javaLocalDateTimeToJodaLocalDateTime(d)
+
+    implicit def javaOffsetDateTimeToJodaDateTimeImplicits(d: java.time.OffsetDateTime): org.joda.time.DateTime = Converter.javaOffsetDateTimeToJodaDateTime(d)
 
     implicit def javaLocalDateToJodaLocalDateImplicits(d: java.time.LocalDate): org.joda.time.LocalDate = Converter.javaLocalDateToJodaLocalDate(d)
 
     implicit def jodaLocalDateToJavaLocalDateImplicits(d: org.joda.time.LocalDate): java.time.LocalDate = Converter.jodaLocalDateToJavaLocalDate(d)
+
+    implicit def jodaDateTimeToJavaOffsetDateTimeImplicits(d: org.joda.time.DateTime): java.time.OffsetDateTime = Converter.jodaDateTimeToJavaOffsetDateTime(d)
   }
 
 }

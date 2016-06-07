@@ -19,7 +19,7 @@ class ConverterSpec extends FlatSpec with Matchers {
   }
 
   it should "JodaLocalDateTime to JavaLocalDateTime" in {
-    jodaDateTime shouldEqual converter.javaLocalDateTimeToJodaDateTime(javaLocalDateTime)
+    jodaDateTime shouldEqual converter.javaLocalDateTimeToJodaLocalDateTime(javaLocalDateTime)
   }
 
   it should "JavaLocalDate to JodaLocalDate" in {
