@@ -31,11 +31,11 @@ class ConverterSpec extends FlatSpec with Matchers {
   }
 
   it should "JodaDateTime to JavaOffsetDateTime" in {
-    javaOffsetDateTime shouldEqual converter.jodaDateTimeToJavaOffsetDateTime(jodaDateTime)
+    javaZonedDateTime shouldEqual converter.jodaDateTimeToJavaZonedDateTime(jodaDateTime)
   }
 
   it should "JavaOffsetDateTime to JodaDateTime" in {
-    jodaDateTime shouldEqual converter.javaOffsetDateTimeToJodaDateTime(javaOffsetDateTime)
+    jodaDateTime shouldEqual converter.javaZonedDateTimeToJodaDateTime(javaZonedDateTime)
   }
 
   "Implicits Converter" should "JavaLocalDateTime to JodaLocalDateTime" in {
@@ -63,14 +63,14 @@ class ConverterSpec extends FlatSpec with Matchers {
   }
 
   it should "JodaDateTime to JavaOffsetDateTime" in {
-    import obakalov.util.time.Converter.Implicits.jodaDateTimeToJavaOffsetDateTimeImplicits
-    val joda: java.time.OffsetDateTime = jodaDateTime
-    javaOffsetDateTime shouldEqual joda
+    import obakalov.util.time.Converter.Implicits.jodaDateTimeToJavaZonedDateTimeImplicits
+    val joda: java.time.ZonedDateTime = jodaDateTime
+    javaZonedDateTime shouldEqual joda
   }
 
   it should "JavaOffsetDateTime to JodaDateTime" in {
-    import obakalov.util.time.Converter.Implicits.javaOffsetDateTimeToJodaDateTimeImplicits
-    val java: org.joda.time.DateTime = javaOffsetDateTime
+    import obakalov.util.time.Converter.Implicits.javaZonedDateTimeToJodaDateTimeImplicits
+    val java: org.joda.time.DateTime = javaZonedDateTime
     jodaDateTime shouldEqual java
   }
 
@@ -91,7 +91,7 @@ class ConverterSpec extends FlatSpec with Matchers {
     val javaLocalDate = java.time.LocalDate.of(year, month, dayOfMonth)
     val jodaLocalDate = new org.joda.time.LocalDate(year, month, dayOfMonth)
 
-    val javaOffsetDateTime = java.time.OffsetDateTime.of(javaLocalDateTime, java.time.ZoneOffset.ofHours(-2))
+    val javaZonedDateTime = java.time.ZonedDateTime.of(javaLocalDateTime, java.time.ZoneOffset.ofHours(-2))
     val jodaDateTime = new org.joda.time.DateTime(year, month, dayOfMonth, hour, minute, seconds, 0, org.joda.time.DateTimeZone.forOffsetHours(-2))
 
   }
