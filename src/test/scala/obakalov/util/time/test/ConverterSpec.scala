@@ -74,6 +74,32 @@ class ConverterSpec extends FlatSpec with Matchers {
     jodaDateTime shouldEqual java
   }
 
+  "Class OptionConverter" should "JavaLocalDateTime to JodaLocalDateTime" in {
+    converter.options.jodaLocalDateTimeToJavaLocalDateTime(Some(jodaLocalDateTime)) should contain(javaLocalDateTime)
+  }
+
+  it should "JodaLocalDateTime to JavaLocalDateTime" in {
+    converter.options.javaLocalDateTimeToJodaLocalDateTime(Some(javaLocalDateTime)) should contain(jodaLocalDateTime)
+  }
+
+  it should "JavaLocalDate to JodaLocalDate" in {
+    converter.options.jodaLocalDateToJavaLocalDate(Some(jodaLocalDate)) should contain(javaLocalDate)
+  }
+
+  it should "JodaLocalDate to JavaLocalDate" in {
+    converter.options.javaLocalDateToJodaLocalDate(Some(javaLocalDate)) should contain(jodaLocalDate)
+  }
+
+  it should "JodaDateTime to JavaOffsetDateTime" in {
+    converter.options.jodaDateTimeToJavaZonedDateTime(Some(jodaDateTime)) should contain(javaZonedDateTime)
+  }
+
+  it should "JavaOffsetDateTime to JodaDateTime" in {
+    converter.options.javaZonedDateTimeToJodaDateTime(Some(javaZonedDateTime)) should contain(jodaDateTime)
+  }
+  it should "None to None" in {
+    converter.options.javaZonedDateTimeToJodaDateTime(Option(null)) shouldBe empty
+  }
 
 
   object Data {
