@@ -1,5 +1,3 @@
-
-
 name := """obakalov-util-time-converter"""
 
 version := "0.1.0"
