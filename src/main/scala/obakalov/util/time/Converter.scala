@@ -9,8 +9,6 @@ import scala.language.implicitConversions
   */
 class Converter {
 
-  val options = new OptionConverter(this)
-
   /**
     * Converting [[org.joda.time.DateTime]] to [[java.time.LocalDateTime]]
     *
@@ -78,7 +76,10 @@ class Converter {
 
 }
 
-protected final class OptionConverter(val converter: Converter) {
+class OptionConverter {
+
+  val converter: Converter = new Converter
+
   def jodaLocalDateTimeToJavaLocalDateTime(op: Option[org.joda.time.LocalDateTime]): Option[java.time.LocalDateTime] =
     op.map(converter.jodaLocalDateTimeToJavaLocalDateTime)
 
