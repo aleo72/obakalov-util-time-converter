@@ -9,6 +9,11 @@ import scala.language.implicitConversions
   */
 class Converter {
 
+  self =>
+
+  def jodaLocalDateTimeToJavaLocalDateTime(op: Option[org.joda.time.LocalDateTime]): Option[java.time.LocalDateTime] =
+    op.map(self.jodaLocalDateTimeToJavaLocalDateTime)
+
   /**
     * Converting [[org.joda.time.DateTime]] to [[java.time.LocalDateTime]]
     *
@@ -18,6 +23,9 @@ class Converter {
   def jodaLocalDateTimeToJavaLocalDateTime(jodaDateTime: org.joda.time.LocalDateTime): java.time.LocalDateTime = {
     java.time.LocalDateTime.ofInstant(jodaDateTime.toDate.toInstant, java.time.ZoneId.systemDefault())
   }
+
+  def javaLocalDateTimeToJodaLocalDateTime(op: Option[java.time.LocalDateTime]): Option[org.joda.time.LocalDateTime] =
+    op.map(self.javaLocalDateTimeToJodaLocalDateTime)
 
   /**
     * Converting [[java.time.LocalDateTime]] to [[org.joda.time.LocalDateTime]]
@@ -33,6 +41,9 @@ class Converter {
     )
   }
 
+  def javaZonedDateTimeToJodaDateTime(op: Option[java.time.ZonedDateTime]): Option[org.joda.time.DateTime] =
+    op.map(self.javaZonedDateTimeToJodaDateTime)
+
   /**
     * Converting [[java.time.ZonedDateTime]] to [[org.joda.time.DateTime]]
     *
@@ -43,6 +54,9 @@ class Converter {
     new org.joda.time.DateTime(zonedDateTime.toInstant.toEpochMilli, org.joda.time.DateTimeZone.forID(zonedDateTime.getOffset.getId))
   }
 
+  def jodaDateTimeToJavaZonedDateTime(op: Option[org.joda.time.DateTime]): Option[java.time.ZonedDateTime] =
+    op.map(self.jodaDateTimeToJavaZonedDateTime)
+
   /**
     * Converting [[org.joda.time.DateTime]] to [[java.time.ZonedDateTime]]
     *
@@ -52,6 +66,8 @@ class Converter {
   def jodaDateTimeToJavaZonedDateTime(dateTime: org.joda.time.DateTime) = java.time.ZonedDateTime
     .ofInstant(dateTime.toDate.toInstant, java.time.ZoneId.of(dateTime.getZone.getID))
 
+  def javaLocalDateToJodaLocalDate(op: Option[java.time.LocalDate]): Option[org.joda.time.LocalDate] =
+    op.map(self.javaLocalDateToJodaLocalDate)
 
   /**
     * Converting [[java.time.LocalDate]] to [[org.joda.time.LocalDate]]
@@ -63,6 +79,9 @@ class Converter {
     new org.joda.time.LocalDate(date.getYear, date.getMonthValue, date.getDayOfMonth)
   }
 
+  def jodaLocalDateToJavaLocalDate(op: Option[org.joda.time.LocalDate]): Option[java.time.LocalDate] =
+    op.map(self.jodaLocalDateToJavaLocalDate)
+
   /**
     * Converting [[org.joda.time.LocalDate]] to [[java.time.LocalDate]]
     *
@@ -73,31 +92,9 @@ class Converter {
     java.time.LocalDate.ofYearDay(jodaDate.getYear, jodaDate.getDayOfYear)
   }
 
-
 }
 
-class OptionConverter {
 
-  val converter: Converter = new Converter
-
-  def jodaLocalDateTimeToJavaLocalDateTime(op: Option[org.joda.time.LocalDateTime]): Option[java.time.LocalDateTime] =
-    op.map(converter.jodaLocalDateTimeToJavaLocalDateTime)
-
-  def javaLocalDateTimeToJodaLocalDateTime(op: Option[java.time.LocalDateTime]): Option[org.joda.time.LocalDateTime] =
-    op.map(converter.javaLocalDateTimeToJodaLocalDateTime)
-
-  def javaZonedDateTimeToJodaDateTime(op: Option[java.time.ZonedDateTime]): Option[org.joda.time.DateTime] =
-    op.map(converter.javaZonedDateTimeToJodaDateTime)
-
-  def jodaDateTimeToJavaZonedDateTime(op: Option[org.joda.time.DateTime]): Option[java.time.ZonedDateTime] =
-    op.map(converter.jodaDateTimeToJavaZonedDateTime)
-
-  def javaLocalDateToJodaLocalDate(op: Option[java.time.LocalDate]): Option[org.joda.time.LocalDate] =
-    op.map(converter.javaLocalDateToJodaLocalDate)
-
-  def jodaLocalDateToJavaLocalDate(op: Option[org.joda.time.LocalDate]): Option[java.time.LocalDate] =
-    op.map(converter.jodaLocalDateToJavaLocalDate)
-}
 
 object Converter extends Converter {
 

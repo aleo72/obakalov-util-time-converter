@@ -11,7 +11,6 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class ConverterSpec extends FlatSpec with Matchers {
   val converter = new obakalov.util.time.Converter
-  val options = new obakalov.util.time.OptionConverter
 
   import Data._
 
@@ -76,30 +75,30 @@ class ConverterSpec extends FlatSpec with Matchers {
   }
 
   "Class OptionConverter" should "JavaLocalDateTime to JodaLocalDateTime" in {
-    options.jodaLocalDateTimeToJavaLocalDateTime(Some(jodaLocalDateTime)) should contain(javaLocalDateTime)
+    converter.jodaLocalDateTimeToJavaLocalDateTime(Some(jodaLocalDateTime)) should contain(javaLocalDateTime)
   }
 
   it should "JodaLocalDateTime to JavaLocalDateTime" in {
-    options.javaLocalDateTimeToJodaLocalDateTime(Some(javaLocalDateTime)) should contain(jodaLocalDateTime)
+    converter.javaLocalDateTimeToJodaLocalDateTime(Some(javaLocalDateTime)) should contain(jodaLocalDateTime)
   }
 
   it should "JavaLocalDate to JodaLocalDate" in {
-    options.jodaLocalDateToJavaLocalDate(Some(jodaLocalDate)) should contain(javaLocalDate)
+    converter.jodaLocalDateToJavaLocalDate(Some(jodaLocalDate)) should contain(javaLocalDate)
   }
 
   it should "JodaLocalDate to JavaLocalDate" in {
-    options.javaLocalDateToJodaLocalDate(Some(javaLocalDate)) should contain(jodaLocalDate)
+    converter.javaLocalDateToJodaLocalDate(Some(javaLocalDate)) should contain(jodaLocalDate)
   }
 
   it should "JodaDateTime to JavaOffsetDateTime" in {
-    options.jodaDateTimeToJavaZonedDateTime(Some(jodaDateTime)) should contain(javaZonedDateTime)
+    converter.jodaDateTimeToJavaZonedDateTime(Some(jodaDateTime)) should contain(javaZonedDateTime)
   }
 
   it should "JavaOffsetDateTime to JodaDateTime" in {
-    options.javaZonedDateTimeToJodaDateTime(Some(javaZonedDateTime)) should contain(jodaDateTime)
+    converter.javaZonedDateTimeToJodaDateTime(Some(javaZonedDateTime)) should contain(jodaDateTime)
   }
   it should "None to None" in {
-    options.javaZonedDateTimeToJodaDateTime(Option(null)) shouldBe empty
+    converter.javaZonedDateTimeToJodaDateTime(Option(null)) shouldBe empty
   }
 
 
