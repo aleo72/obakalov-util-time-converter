@@ -12,14 +12,14 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 // Uncomment to use Akka
 //libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.11"
 
-libraryDependencies += "joda-time" % "joda-time" % "2.9.3"
+libraryDependencies += "joda-time" % "joda-time" % "2.9.2"
 
 
 // sbt clean coverage test coverageReport
 parallelExecution in Test := false
 
-coverageEnabled := true
-
-coverageMinimum := 100
-
-coverageFailOnMinimum := true
+//coverageEnabled := true
+//
+//coverageMinimum := 100
+//
+//coverageFailOnMinimum := true
